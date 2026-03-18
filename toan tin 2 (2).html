@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phương trình bậc hai</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #0f0f23; /* nền tối để nổi bật ký tự toán */
+      color: #e0e0ff;
+      position: relative;
+      overflow: hidden; /* ẩn các ký tự bay ra ngoài */
+      min-height: 100vh;
+    }
+
+    /* Hiệu ứng toán bay bay */
+    .math-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; /* không cản click */
+      z-index: -1;
+    }
+
+    .symbol {
+      position: absolute;
+      color: rgba(100, 180, 255, 0.7); /* xanh nhạt trong suốt */
+      font-size: 1.8rem;
+      font-weight: bold;
+      white-space: nowrap;
+      animation: floatUp linear infinite;
+      text-shadow: 0 0 8px rgba(100, 180, 255, 0.5);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.9; }
+      90% { opacity: 0.9; }
+      100% {
+        transform: translateY(-150px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Tạo nhiều ký tự với vị trí, thời gian, kích thước ngẫu nhiên */
+    .symbol:nth-child(1)  { left: 5%;  animation-duration: 18s; animation-delay: 0s;    font-size: 2.2rem; }
+    .symbol:nth-child(2)  { left: 12%; animation-duration: 22s; animation-delay: 2s;   }
+    .symbol:nth-child(3)  { left: 18%; animation-duration: 15s; animation-delay: 1s;   font-size: 2.8rem; }
+    .symbol:nth-child(4)  { left: 25%; animation-duration: 25s; animation-delay: 4s;   }
+    .symbol:nth-child(5)  { left: 33%; animation-duration: 19s; animation-delay: 0.5s; }
+    .symbol:nth-child(6)  { left: 40%; animation-duration: 21s; animation-delay: 3s;   font-size: 1.6rem; }
+    .symbol:nth-child(7)  { left: 48%; animation-duration: 17s; animation-delay: 5s;   }
+    .symbol:nth-child(8)  { left: 55%; animation-duration: 23s; animation-delay: 1.5s; }
+    .symbol:nth-child(9)  { left: 62%; animation-duration: 20s; animation-delay: 6s;   font-size: 2.5rem; }
+    .symbol:nth-child(10) { left: 70%; animation-duration: 16s; animation-delay: 2.5s; }
+    .symbol:nth-child(11) { left: 78%; animation-duration: 24s; animation-delay: 4.5s; }
+    .symbol:nth-child(12) { left: 85%; animation-duration: 18s; animation-delay: 7s;   }
+    .symbol:nth-child(13) { left: 92%; animation-duration: 26s; animation-delay: 0s;   font-size: 2rem; }
+
+    /* Thêm nhiều layer để dày đặc hơn */
+    .symbol:nth-child(14) { left: 8%;  animation-duration: 14s; animation-delay: 8s;  color: rgba(255, 180, 100, 0.6); }
+    .symbol:nth-child(15) { left: 20%; animation-duration: 28s; animation-delay: 3s;  }
+    .symbol:nth-child(16) { left: 35%; animation-duration: 13s; animation-delay: 9s;  }
+    .symbol:nth-child(17) { left: 50%; animation-duration: 30s; animation-delay: 1s;  font-size: 3rem; }
+    .symbol:nth-child(18) { left: 65%; animation-duration: 16s; animation-delay: 5.5s; }
+    .symbol:nth-child(19) { left: 75%; animation-duration: 19s; animation-delay: 7.5s; }
+    .symbol:nth-child(20) { left: 88%; animation-duration: 22s; animation-delay: 4s;  }
+
+    h1 {
+      color: #a0d0ff;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(160, 208, 255, 0.7);
+    }
+
+    .formula {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      border: 1px solid rgba(100, 180, 255, 0.3);
+    }
+
+    .exercise {
+      background: rgba(234, 242, 248, 0.1);
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(100, 180, 255, 0.2);
+    }
+
+    input {
+      margin: 8px;
+      padding: 10px;
+      width: 80px;
+      border-radius: 6px;
+      border: 1px solid #a0d0ff;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2ecc71;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="math-bg">
+    <div class="symbol">x²</div>
+    <div class="symbol">Δ</div>
+    <div class="symbol">√</div>
+    <div class="symbol">+</div>
+    <div class="symbol">-</div>
+    <div class="symbol">×</div>
+    <div class="symbol">÷</div>
+    <div class="symbol">=</div>
+    <div class="symbol">π</div>
+    <div class="symbol">∞</div>
+    <div class="symbol">∑</div>
+    <div class="symbol">∫</div>
+    <div class="symbol">x</div>
+    <div class="symbol">b²</div>
+    <div class="symbol">4ac</div>
+    <div class="symbol">(-b ± √Δ)</div>
+    <div class="symbol">2a</div>
+    <div class="symbol">123</div>
+    <div class="symbol">0.618</div>
+    <div class="symbol">∞</div>
+  </div>
+
+  <h1>Phương trình bậc hai</h1>
+
+  <div class="formula">
+    <p>Công thức nghiệm của phương trình bậc hai:</p>
+    <p><strong>ax² + bx + c = 0</strong></p>
+    <p>
+      Δ = b² - 4ac <br>
+      Nếu Δ > 0: có 2 nghiệm phân biệt <br>
+      Nếu Δ = 0: có nghiệm kép <br>
+      Nếu Δ < 0: vô nghiệm
+    </p>
+    <p>
+      Nghiệm: x = (-b ± √Δ) / (2a)
+    </p>
+  </div>
+
+  <div class="exercise">
+    <h2>Bài tập thực hành</h2>
+    <p>Nhập hệ số a, b, c:</p>
+    <input type="number" id="a" placeholder="a">
+    <input type="number" id="b" placeholder="b">
+    <input type="number" id="c" placeholder="c">
+    <button onclick="solve()">Giải</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function solve() {
+      let a = parseFloat(document.getElementById('a').value);
+      let b = parseFloat(document.getElementById('b').value);
+      let c = parseFloat(document.getElementById('c').value);
+      let result = document.getElementById('result');
+
+      if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        result.innerHTML = "Vui lòng nhập đầy đủ số!";
+        return;
+      }
+
+      if (a === 0) {
+        result.innerHTML = "Đây không phải phương trình bậc hai (a ≠ 0).";
+        return;
+      }
+
+      let delta = b*b - 4*a*c;
+      if (delta > 0) {
+        let x1 = (-b + Math.sqrt(delta)) / (2*a);
+        let x2 = (-b - Math.sqrt(delta)) / (2*a);
+        result.innerHTML = `Δ = ${delta.toFixed(4)} > 0, có 2 nghiệm phân biệt:<br>x₁ = ${x1.toFixed(4)}, x₂ = ${x2.toFixed(4)}`;
+      } else if (delta === 0) {
+        let x = -b / (2*a);
+        result.innerHTML = `Δ = 0, có nghiệm kép:<br>x = ${x.toFixed(4)}`;
+      } else {
+        result.innerHTML = `Δ = ${delta.toFixed(4)} < 0, phương trình vô nghiệm (vô nghiệm thực).`;
+      }
+    }
+  </script>
+</body>
+</html>
